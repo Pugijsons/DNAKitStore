@@ -4,7 +4,7 @@ namespace DNAKitStore.Storage
 {
     public class OrderStorage : IOrderStorage
     {
-        private readonly List<Order> _orderStorageList;
+        private List<Order> _orderStorageList;
 
         public OrderStorage()
         {
