@@ -29,4 +29,17 @@ public class OrderService
         order.FinalOrderPrice = Math.Round(kitQuantity * kitType.Price * _discountService.DiscountCalculator(order), 2);
         _orderStorage.AddNewOrderToStorage(order);
     }
+
+    public void ListAllOrders()
+    {
+        var orderList = _orderStorage.FetchAllOrders();
+        if (orderList.Count == 0)
+        {
+            Console.WriteLine("No orders placed yet!");
+        }
+        foreach (var order in orderList)
+        {
+            Console.WriteLine($"Customer: {order.CustomerId}, kit selected: {order.KitType.DnaKitToString()}, price per item: {order.KitType.Price}, quantity: {order.KitQuantity}, final price: {order.FinalOrderPrice}.");
+        }
+    }
 }

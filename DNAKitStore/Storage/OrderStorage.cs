@@ -15,5 +15,10 @@ namespace DNAKitStore.Storage
         {
             _orderStorageList.Add(order);
         }
+
+        public List<Order> FetchAllOrders()
+        {
+            return _orderStorageList;
+        }
     }
 }
