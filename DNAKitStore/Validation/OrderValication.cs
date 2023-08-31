@@ -6,7 +6,7 @@ public class OrderValidation : IOrderValidation
 {
     public bool IsKitQuantityValid(int kitQuantity )
     {
-        if (kitQuantity <= 0 || kitQuantity > 999)
+        if (kitQuantity is <= 0 or > 999)
         {
             return false;
         }
