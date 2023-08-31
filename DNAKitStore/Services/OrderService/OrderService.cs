@@ -1,5 +1,4 @@
 ﻿using DNAKitStore.Models;
-using DNAKitStore.Services.DiscountService;
 using DNAKitStore.Storage;
 using DNAKitStore.Validation;
 using DNAKitStore.Exceptions;
@@ -7,7 +6,7 @@ using DNAKitStore.Services.DiscountCalculator;
 
 namespace DNAKitStore.Services.OrderService;
 
-public class OrderService
+public class OrderService : IOrderService
 {
     private readonly IOrderStorage _orderStorage;
     private readonly IOrderValidation _orderValidation;

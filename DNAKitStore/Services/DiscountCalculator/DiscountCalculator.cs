@@ -2,7 +2,7 @@
 
 namespace DNAKitStore.Services.DiscountCalculator;
 
-public class DiscountCalculator
+public class DiscountCalculator : IDiscountCalculator
 {
     private readonly IDiscountService _discountService;
 
