@@ -1,4 +1,5 @@
-﻿using DNAKitStore.Models;
+﻿using DNAKitStore.Exceptions;
+using DNAKitStore.Models;
 using DNAKitStore.Services.DiscountService;
 
 namespace DNAKitStore.Services.PriceService;
@@ -14,7 +15,12 @@ public class PriceService : IPriceService
 
     public Order ApplyFinalPriceToOrder(Order order)
     {
-        order.FinalOrderPrice = order.KitQuantity * order.KitType.Price * _discountService.DiscountAmountFinder(order.KitQuantity);
+        if (order == null)
+        {
+            throw new InvalidOrderException();
+        }
+
+        order.FinalOrderPrice = Math.Round(order.KitQuantity * order.KitType.Price * _discountService.DiscountAmountFinder(order.KitQuantity), 2);
         return order;
     }
 }
