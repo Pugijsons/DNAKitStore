@@ -4,19 +4,29 @@ namespace DNAKitStore.Validation;
 
 public class OrderValidation : IOrderValidation
 {
-    public bool IsOrderValid(Order order)
+    public bool IsKitQuantityValid(int kitQuantity )
     {
-        if (order.ExpectedDelivery <= DateTime.UtcNow)
+        if (kitQuantity <= 0 || kitQuantity > 999)
         {
             return false;
         }
 
-        if (order.KitQuantity <= 0 || order.KitQuantity % 1 != 0 || order.KitQuantity > 999)
+        return true;
+    }
+
+    public bool IsCustomerIdValid(int customerId)
+    {
+        if (customerId < 0)
         {
             return false;
         }
 
-        if (order.CustomerId < 0)
+        return true;
+    }
+
+    public bool IsDeliveryDateValid(DateTime expectedDelivery)
+    {
+        if (expectedDelivery <= DateTime.UtcNow)
         {
             return false;
         }

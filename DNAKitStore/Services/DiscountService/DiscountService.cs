@@ -4,18 +4,18 @@ namespace DNAKitStore.Services.DiscountService;
 
 public class DiscountService : IDiscountService
 {
-    public double DiscountCalculator(Order order)
+    public decimal DiscountAmountFinder(int orderKitQuantity)
     {
-        if (order.KitQuantity >= 10 && order.KitQuantity < 50)
+        if (orderKitQuantity >= 10 && orderKitQuantity < 50)
         {
-            return 0.95;
+            return 0.95m;
         }
 
-        if (order.KitQuantity >= 50)
+        if (orderKitQuantity >= 50)
         {
-            return 0.85;
+            return 0.85m;
         }
 
-        return 1;
+        return 1m;
     }
 }

@@ -1,10 +1,10 @@
 ﻿namespace DNAKitStore.Models;
 
-public class RegularDnaKit : BaseDnaKit
+public class RegularDnaKit : IBaseDnaKit
 {
-    public override double Price => 98.99;
+    public decimal Price => 98.99m;
 
-    public override string DnaKitToString()
+    public string DnaKitToString()
     {
         return "Regular DNA kit";
     }

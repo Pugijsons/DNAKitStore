@@ -4,5 +4,7 @@ namespace DNAKitStore.Validation;
 
 public interface IOrderValidation
 {
-    public bool IsOrderValid(Order order);
+    public bool IsKitQuantityValid(int kitQuantity);
+    public bool IsDeliveryDateValid(DateTime deliveryDate);
+    public bool IsCustomerIdValid(int customerId);
 }

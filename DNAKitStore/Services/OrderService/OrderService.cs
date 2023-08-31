@@ -3,31 +3,54 @@ using DNAKitStore.Services.DiscountService;
 using DNAKitStore.Storage;
 using DNAKitStore.Validation;
 using DNAKitStore.Exceptions;
+using DNAKitStore.Services.DiscountCalculator;
 
 namespace DNAKitStore.Services.OrderService;
 
 public class OrderService
 {
     private readonly IOrderStorage _orderStorage;
-    private readonly IDiscountService _discountService;
     private readonly IOrderValidation _orderValidation;
+    private readonly IDiscountCalculator _discountCalculator;
 
-    public OrderService(IOrderStorage orderStorage, IDiscountService discountService, IOrderValidation orderValidation)
+    public OrderService(IOrderStorage orderStorage, IOrderValidation orderValidation, IDiscountCalculator discountCalculator)
     {
         _orderStorage = orderStorage;
-        _discountService = discountService;
         _orderValidation = orderValidation;
+        _discountCalculator = discountCalculator;
     }
 
-    public void CreateNewOrder(int customerId, DateTime expectedDelivery, int kitQuantity, BaseDnaKit kitType)
+    public void CreateNewOrder(int customerId, DateTime expectedDelivery, int kitQuantity, IBaseDnaKit kitType)
     {
-        Order order = new Order(customerId, expectedDelivery, kitQuantity, kitType);
-        if (_orderValidation.IsOrderValid(order) == false)
+        if (_orderValidation.IsCustomerIdValid(customerId) == false)
         {
-            throw new InvalidOrderException();
+            throw new InvalidCustomerIdException();
         }
-        order.FinalOrderPrice = Math.Round(kitQuantity * kitType.Price * _discountService.DiscountCalculator(order), 2);
+
+        if (_orderValidation.IsDeliveryDateValid(expectedDelivery) == false)
+        {
+            throw new InvalidDeliveryDateException();
+        }
+
+        if (_orderValidation.IsKitQuantityValid(kitQuantity) == false)
+        {
+            throw new InvalidQuantityException();
+        }
+
+        Order order = new Order(customerId, expectedDelivery, kitQuantity, kitType);
+        ApplyDiscount(order);
         _orderStorage.AddNewOrderToStorage(order);
+    }
+
+    public decimal CalculateFinalPrice(Order order)
+    {
+        return order.KitQuantity * order.KitType.Price;
+    }
+
+    public void ApplyDiscount(Order order)
+    {
+        decimal finalPrice = CalculateFinalPrice(order);
+        order.FinalOrderPrice *= _discountCalculator.CalculateDiscount(finalPrice, order.KitQuantity);
     }
 
     public void ListAllOrders()

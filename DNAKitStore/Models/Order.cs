@@ -5,10 +5,10 @@ public class Order
     public int CustomerId { get; set; }
     public DateTime ExpectedDelivery { get; set; }
     public int KitQuantity { get; set; }
-    public BaseDnaKit KitType { get; set; }
-    public double FinalOrderPrice { get; set; } = 0;
+    public IBaseDnaKit KitType { get; set; }
+    public decimal FinalOrderPrice { get; set; } = 0;
 
-    public Order(int customerId, DateTime expectedDelivery, int kitQuantity, BaseDnaKit kitType)
+    public Order(int customerId, DateTime expectedDelivery, int kitQuantity, IBaseDnaKit kitType)
     {
         CustomerId = customerId;
         ExpectedDelivery = expectedDelivery;

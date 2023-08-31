@@ -4,5 +4,5 @@ namespace DNAKitStore.Services.DiscountService;
 
 public interface IDiscountService
 {
-    public double DiscountCalculator(Order order);
+    public decimal DiscountAmountFinder(int orderKitQuantity);
 }
