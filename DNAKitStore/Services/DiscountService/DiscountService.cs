@@ -2,18 +2,24 @@
 
 public class DiscountService : IDiscountService
 {
+    private const int SmallOrderTreshold = 10;
+    private const int LargeOrderTreshold = 50;
+    private const decimal SmallDiscountConstant = 0.95m;
+    private const decimal LargeDiscountConstant = 0.85m;
+    private const decimal NoDiscount = 1m;
+
     public decimal DiscountAmountFinder(int orderKitQuantity)
     {
-        if (orderKitQuantity is >= 10 and < 50)
+        if (orderKitQuantity is >= SmallOrderTreshold and < LargeOrderTreshold)
         {
-            return 0.95m;
+            return SmallDiscountConstant;
         }
 
-        if (orderKitQuantity >= 50)
+        if (orderKitQuantity >= LargeOrderTreshold)
         {
-            return 0.85m;
+            return LargeDiscountConstant;
         }
 
-        return 1m;
+        return NoDiscount;
     }
 }
