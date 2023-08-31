@@ -7,7 +7,7 @@ namespace DNAKitStore.tests;
 
 public class OrderStorageTests
 {
-    private IOrderStorage _orderStorage;
+    private OrderStorage _orderStorage;
     private List<Order> _orderList;
     private RegularDnaKit _testKit;
     private Order _testOrder;

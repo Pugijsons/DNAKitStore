@@ -11,7 +11,7 @@ namespace DNAKitStore.tests;
 
 public class OrderServiceTests
 {
-    private IOrderService _orderService;
+    private OrderService _orderService;
     private AutoMocker _autoMocker;
     private RegularDnaKit _testKit;
 
