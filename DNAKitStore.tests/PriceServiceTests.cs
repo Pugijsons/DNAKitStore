@@ -29,7 +29,7 @@ public class PriceServiceTests
     {
         _autoMocker.GetMock<IDiscountService>().Setup(o => o.DiscountAmountFinder(It.IsAny<int>())).Returns(0.5m);
         var order = _priceService.ApplyFinalPriceToOrder(_testOrder);
-        order.FinalOrderPrice.Should().Be(Math.Round(98.99m * 0.5m, 2));
+        order.FinalOrderPrice.Should().Be(decimal.Round(98.99m * 0.5m, 2));
     }
 
     [Test]

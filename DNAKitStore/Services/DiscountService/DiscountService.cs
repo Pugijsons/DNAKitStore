@@ -1,7 +1,4 @@
-﻿using DNAKitStore.Models;
-using Microsoft.VisualBasic;
-
-namespace DNAKitStore.Services.DiscountService;
+﻿namespace DNAKitStore.Services.DiscountService;
 
 public class DiscountService : IDiscountService
 {

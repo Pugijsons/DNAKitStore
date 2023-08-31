@@ -20,7 +20,7 @@ public class PriceService : IPriceService
             throw new InvalidOrderException();
         }
 
-        order.FinalOrderPrice = Math.Round(order.KitQuantity * order.KitType.Price * _discountService.DiscountAmountFinder(order.KitQuantity), 2);
+        order.FinalOrderPrice = decimal.Round(order.KitQuantity * order.KitType.Price * _discountService.DiscountAmountFinder(order.KitQuantity), 2);
         return order;
     }
 }

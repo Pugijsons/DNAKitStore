@@ -35,6 +35,12 @@ public class OrderValidationTests
     }
 
     [Test]
+    public void IsKitQuantityValidReturnsFalseWithQuantityOverLimit()
+    {
+        _orderValidation.IsKitQuantityValid(1000).Should().BeFalse();
+    }
+
+    [Test]
     public void IsCustomerIdValidReturnsTrueWithValidCustomerId()
     {
         _orderValidation.IsCustomerIdValid(0).Should().BeTrue();

@@ -1,6 +1,4 @@
-﻿using DNAKitStore.Models;
-
-namespace DNAKitStore.Validation;
+﻿namespace DNAKitStore.Validation;
 
 public class OrderValidation : IOrderValidation
 {
