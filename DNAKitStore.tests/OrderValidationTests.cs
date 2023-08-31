@@ -1,10 +1,17 @@
-﻿namespace DNAKitStore.tests;
+﻿using DNAKitStore.Validation;
+
+namespace DNAKitStore.tests;
 
 public class OrderValidationTests
 {
-    [SetUp]
-    public void Setup()
-    {
 
+    private IOrderValidation _orderValidation;
+
+    [SetUp]
+    public void Setup(IOrderValidation orderValidation)
+    {
+        _orderValidation = orderValidation;
     }
+
+
 }

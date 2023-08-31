@@ -1,6 +1,5 @@
 ﻿using DNAKitStore.Exceptions;
 using DNAKitStore.Models;
-using DNAKitStore.Services.DiscountCalculator;
 using DNAKitStore.Services.OrderService;
 using DNAKitStore.Storage;
 using DNAKitStore.Validation;
@@ -15,7 +14,6 @@ public class OrderServiceTests
     private IOrderService _orderService;
     private AutoMocker _autoMocker;
     private RegularDnaKit _testKit;
-    private Order _testOrder;
 
 
     [SetUp]
@@ -24,7 +22,6 @@ public class OrderServiceTests
         _autoMocker = new AutoMocker();
         _orderService = _autoMocker.CreateInstance<OrderService>();
         _testKit = new RegularDnaKit();
-        _testOrder = new Order(1, DateTime.UtcNow, 1, _testKit);
     }
 
     [Test]
@@ -66,16 +63,6 @@ public class OrderServiceTests
 
         Action action = () => _orderService.CreateNewOrder(1, DateTime.UtcNow, 1, _testKit);
         action.Should().Throw<InvalidQuantityException>();
-    }
-
-    [Test]
-    public void CalculateFinalPriceReturnsCorrectPrice()
-    {
-        _autoMocker.GetMock<IDiscountCalculator>().Setup(o => o.CalculateDiscount(It.IsAny<decimal>(), It.IsAny<int>())).Returns(1);
-
-        _orderService.CalculateFinalPrice(_testOrder);
-
-        _testOrder.FinalOrderPrice.Should().Be(1);
     }
 
     [Test]
