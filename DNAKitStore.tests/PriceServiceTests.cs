@@ -20,8 +20,8 @@ public class PriceServiceTests
     {
         _autoMocker = new AutoMocker();
         _priceService = _autoMocker.CreateInstance<PriceService>();
-        _testOrder = new Order(1, DateTime.UtcNow, 1, _testKit);
         _testKit = new RegularDnaKit();
+        _testOrder = new Order(1, DateTime.UtcNow, 1, _testKit);
     }
 
     [Test]
