@@ -2,7 +2,7 @@
 using DNAKitStore.Storage;
 using DNAKitStore.Validation;
 using DNAKitStore.Exceptions;
-using DNAKitStore.Services.DiscountCalculator;
+using DNAKitStore.Services.PriceService;
 
 namespace DNAKitStore.Services.OrderService;
 
@@ -10,13 +10,13 @@ public class OrderService : IOrderService
 {
     private readonly IOrderStorage _orderStorage;
     private readonly IOrderValidation _orderValidation;
-    private readonly IDiscountCalculator _discountCalculator;
+    private readonly IPriceService _priceService;
 
-    public OrderService(IOrderStorage orderStorage, IOrderValidation orderValidation, IDiscountCalculator discountCalculator)
+    public OrderService(IOrderStorage orderStorage, IOrderValidation orderValidation, IPriceService priceService)
     {
         _orderStorage = orderStorage;
         _orderValidation = orderValidation;
-        _discountCalculator = discountCalculator;
+        _priceService = priceService;
     }
 
     public void CreateNewOrder(int customerId, DateTime expectedDelivery, int kitQuantity, IBaseDnaKit kitType)
@@ -37,31 +37,12 @@ public class OrderService : IOrderService
         }
 
         Order order = new Order(customerId, expectedDelivery, kitQuantity, kitType);
-        ApplyDiscount(order);
+        order = _priceService.ApplyFinalPriceToOrder(order);
         _orderStorage.AddNewOrderToStorage(order);
     }
 
-    public decimal CalculateFinalPrice(Order order)
+    public List<Order> ListAllCustomerOrders(int customerId)
     {
-        return order.KitQuantity * order.KitType.Price;
-    }
-
-    public void ApplyDiscount(Order order)
-    {
-        decimal finalPrice = CalculateFinalPrice(order);
-        order.FinalOrderPrice *= _discountCalculator.CalculateDiscount(finalPrice, order.KitQuantity);
-    }
-
-    public void ListAllOrders()
-    {
-        var orderList = _orderStorage.FetchAllOrders();
-        if (orderList.Count == 0)
-        {
-            Console.WriteLine("No orders placed yet!");
-        }
-        foreach (var order in orderList)
-        {
-            Console.WriteLine($"Customer: {order.CustomerId}, kit selected: {order.KitType.DnaKitToString()}, price per item: {order.KitType.Price}, quantity: {order.KitQuantity}, final price: {order.FinalOrderPrice}.");
-        }
+        return _orderStorage.FetchAllCustomerOrders(customerId);
     }
 }

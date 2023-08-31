@@ -4,7 +4,7 @@ namespace DNAKitStore.Validation;
 
 public class OrderValidation : IOrderValidation
 {
-    public bool IsKitQuantityValid(int kitQuantity )
+    public bool IsKitQuantityValid(int kitQuantity)
     {
         if (kitQuantity is <= 0 or > 999)
         {

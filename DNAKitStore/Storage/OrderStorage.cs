@@ -1,4 +1,5 @@
-﻿using DNAKitStore.Models;
+﻿using DNAKitStore.Exceptions;
+using DNAKitStore.Models;
 
 namespace DNAKitStore.Storage
 {
@@ -6,19 +7,29 @@ namespace DNAKitStore.Storage
     {
         private List<Order> _orderStorageList;
 
-        public OrderStorage()
+        public OrderStorage(List<Order> orderStorageList)
         {
-            _orderStorageList = new List<Order>();
+            _orderStorageList = orderStorageList;
         }
 
         public void AddNewOrderToStorage(Order order)
         {
+            if (order == null)
+            {
+                throw new InvalidOrderException();
+            }
+
             _orderStorageList.Add(order);
         }
 
         public List<Order> FetchAllOrders()
         {
-            return _orderStorageList;
+            return _orderStorageList.ToList();
+        }
+
+        public List<Order> FetchAllCustomerOrders(int customerId)
+        {
+            return _orderStorageList.Where(o => o.CustomerId == customerId).ToList();
         }
     }
 }
